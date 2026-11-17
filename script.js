@@ -1,21 +1,40 @@
-// Mobile navigation and small page enhancements.
-const menuToggle = document.getElementById("menuToggle");
-const navLinks = document.getElementById("navLinks");
 
-menuToggle.addEventListener("click", () => {
-  const isOpen = navLinks.classList.toggle("open");
-  menuToggle.setAttribute("aria-expanded", String(isOpen));
-  menuToggle.textContent = isOpen ? "×" : "☰";
+const themeToggle = document.getElementById("themeToggle");
+const typingText = document.getElementById("typingText");
+const backToTop = document.getElementById("backToTop");
+
+// 1. Light / Dark Mode
+themeToggle.addEventListener("click", function () {
+    document.body.classList.toggle("light-mode");
+
+    if (document.body.classList.contains("light-mode")) {
+        themeToggle.textContent = "🌙 Dark Mode";
+    } else {
+        themeToggle.textContent = "☀️ Light Mode";
+    }
 });
 
-// Close the mobile menu after choosing a section.
-navLinks.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => {
-    navLinks.classList.remove("open");
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.textContent = "☰";
-  });
+// 2. Typing Animation
+const words = ["CS Student", "AI Enthusiast", "Future AI Engineer"];
+let wordIndex = 0;
+
+setInterval(function () {
+    wordIndex = (wordIndex + 1) % words.length;
+    typingText.textContent = words[wordIndex];
+}, 2000);
+
+// 4. Back to Top
+window.addEventListener("scroll", function () {
+    if (window.scrollY > 200) {
+        backToTop.style.display = "block";
+    } else {
+        backToTop.style.display = "none";
+    }
 });
 
-// Keep the footer year current.
-document.getElementById("year").textContent = new Date().getFullYear();
+backToTop.addEventListener("click", function () {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});
